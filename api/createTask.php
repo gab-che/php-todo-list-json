@@ -1,4 +1,14 @@
 <?php
-$new_task = array_key_exists('new_task', $_POST) ? $_POST['new_task'] : '';
+$tasks = json_decode(file_get_contents("../tasks.json"), true);
 
-var_dump($new_task);
+$new_task = [
+    'task_name' => "Hitchhike across space",
+    'task_status' => true,
+];
+
+$tasks[] = $new_task;
+
+$new_task_json = json_encode($tasks, JSON_PRETTY_PRINT);
+file_put_contents("../tasks.json", $new_task_json);
+
+var_dump($tasks);

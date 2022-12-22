@@ -1,0 +1,14 @@
+[
+    {
+        "task_name": "Don't panic",
+        "task_status": false
+    },
+    {
+        "task_name": "Find answers to questions",
+        "task_status": false
+    },
+    {
+        "task_name": "Hitchhike across space",
+        "task_status": true
+    }
+]

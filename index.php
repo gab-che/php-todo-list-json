@@ -1,5 +1,5 @@
 <?php
-isset($_POST['new_task']) ? $_POST['new_task'] : $_POST['new_task'] = '';
+array_key_exists('new_task', $_POST) ? $_POST['new_task'] : $_POST['new_task'] = '';
 ?>
 
 <!DOCTYPE html>
