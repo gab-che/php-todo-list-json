@@ -1,3 +1,7 @@
+<?php
+isset($_POST['new_task']) ? $_POST['new_task'] : $_POST['new_task'] = '';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +17,20 @@
 
 <body>
     <div id="app">
-
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 m-auto">
+                    <h1 class="text-center py-5">PHP To-do</h1>
+                    <div class="task_container"></div>
+                    <form action="api/createTask.php" method="POST">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Inserisci nuova task" name="new_task">
+                            <button class="btn btn-outline-secondary">Invia</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <script src="js/script.js"></script>
