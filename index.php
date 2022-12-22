@@ -1,4 +1,5 @@
 <?php
+$tasks = json_decode(file_get_contents("tasks.json"), true);
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +26,9 @@
                             <li class="list-group-item" v-for="task in taskList">{{task.task_name}}</li>
                         </ul>
                     </div>
-                    <form action="" method="POST">
+                    <form @submit.prevent="taskSubmit">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Inserisci nuova task" name="new_task">
+                            <input type="text" class="form-control" placeholder="Inserisci nuova task" v-model="taskData.new_task">
                             <button class="btn btn-outline-secondary">Invia</button>
                         </div>
                     </form>

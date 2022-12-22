@@ -4,6 +4,7 @@ createApp({
     data() {
         return {
             taskList: [],
+            taskData: {},
         }
     },
 
@@ -14,6 +15,17 @@ createApp({
                     console.log(resp);
                     this.taskList = resp.data;
                 })
+        },
+
+        taskSubmit() {
+            axios.post('api/createTask.php', this.taskData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            })
+                .then((resp) => {
+                    this.fetchTasks();
+                })
+
+            this.taskData.new_task = '';
         }
     },
 

@@ -12,4 +12,6 @@ $tasks[] = $new_task;
 
 file_put_contents("../tasks.json", json_encode($tasks, JSON_PRETTY_PRINT));
 
-var_dump($tasks);
+header("Content-Type: application/json");
+
+echo json_encode($new_task);
