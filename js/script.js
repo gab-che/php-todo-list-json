@@ -12,7 +12,6 @@ createApp({
         fetchTasks() {
             axios.get('api/tasksApi.php')
                 .then((resp) => {
-                    console.log(resp);
                     this.taskList = resp.data;
                 })
         },
@@ -26,6 +25,10 @@ createApp({
                 })
 
             this.taskData.new_task = '';
+        },
+
+        changeTaskStatus(index) {
+            this.taskList[index].task_status = !this.taskList[index].task_status;
         }
     },
 
