@@ -20,8 +20,12 @@
             <div class="row">
                 <div class="col-md-5 m-auto">
                     <h1 class="text-center py-5">PHP To-do</h1>
-                    <div class="task_container"></div>
-                    <form action="api/createTask.php" method="POST">
+                    <div class="task_container mb-3">
+                        <ul class="list-group">
+                            <li class="list-group-item" v-for="task in taskList">{{task.task_name}}</li>
+                        </ul>
+                    </div>
+                    <form action="" method="POST">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" placeholder="Inserisci nuova task" name="new_task">
                             <button class="btn btn-outline-secondary">Invia</button>
