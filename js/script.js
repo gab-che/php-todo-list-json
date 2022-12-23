@@ -33,7 +33,15 @@ createApp({
             })
                 .then((resp) => {
                     this.fetchTasks();
-                    console.log(id);
+                })
+        },
+
+        deleteTask(id) {
+            axios.post('api/deleteTask.php', { id }, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            })
+                .then((resp) => {
+                    this.fetchTasks();
                 })
         }
     },
