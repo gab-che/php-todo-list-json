@@ -27,8 +27,14 @@ createApp({
             this.taskData.new_task = '';
         },
 
-        changeTaskStatus(index) {
-            this.taskList[index].task_status = !this.taskList[index].task_status;
+        changeTaskStatus(id) {
+            axios.post('api/toggleTaskStatus.php', { id }, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            })
+                .then((resp) => {
+                    this.fetchTasks();
+                    console.log(id);
+                })
         }
     },
 

@@ -24,7 +24,7 @@ $tasks = json_decode(file_get_contents("tasks.json"), true);
                     <h1 class="text-center py-5">PHP To-do</h1>
                     <div class="task_container mb-3">
                         <ul class="list-group">
-                            <li class="list-group-item" v-for="(task, i) in taskList" :class="task.task_status ? 'text-decoration-line-through' : ''" @dblclick=changeTaskStatus(i)>
+                            <li class="list-group-item" v-for="task in taskList" :class="task.task_status ? 'text-decoration-line-through' : ''" @dblclick="changeTaskStatus(task.task_id)">
                                 <span>{{task.task_name}}</span>
                             </li>
                         </ul>

@@ -6,6 +6,7 @@ $tasks = json_decode(file_get_contents("../tasks.json"), true);
 $new_task = [
     'task_name' => $_POST['new_task'],
     'task_status' => false,
+    'task_id' => uniqid()
 ];
 
 $tasks[] = $new_task;
