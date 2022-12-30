@@ -9,6 +9,7 @@ $new_task = [
     'task_status' => false,
     'task_id' => uniqid(),
     'task_cat_list' => false,
+    'task_important' => false,
 ];
 
 $tasks[] = $new_task;

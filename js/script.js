@@ -73,9 +73,38 @@ createApp({
                     this.fetchCategories()
                 })
             console.log(i, id);
+        },
+
+        startDrag(e, item) {
+            e.dataTransfer.dropEffect = 'move';
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('taskId', item.task_id);
+        },
+
+        onDrop(e, list) {
+            const itemId = e.dataTransfer.getData('taskId');
+            const item = this.taskList.find((task) => task.task_id === itemId);
+            item.task_important = list;
+
+            axios.post('api/editTaskPriority.php', { itemId }, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            })
+                .then((resp) => {
+                    this.fetchTasks();
+                })
         }
     },
 
+    computed: {
+        taskImportance() {
+            let toReturn = {
+                zero: this.taskList.filter((task) => task.task_important === false),
+                one: this.taskList.filter((task) => task.task_important === true),
+            }
+
+            return toReturn
+        }
+    },
 
     mounted() {
         this.fetchTasks();

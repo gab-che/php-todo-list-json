@@ -21,24 +21,53 @@ $tasks = json_decode(file_get_contents("tasks.json"), true);
     <div id="app">
         <div class="container">
             <div class="row">
-                <div class="col-md-5 m-auto">
+                <div class="col-md-10 col-lg-8 m-auto">
                     <h1 class="text-center py-5">PHP To-do</h1>
-                    <div class="task_container mb-3">
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(task, i) in taskList" @dblclick="changeTaskStatus(task.task_id)">
-                                <div class="task_text d-flex gap-3 align-items-center">
-                                    <span :class="task.task_status ? 'text-decoration-line-through' : ''">{{task.task_name}}</span>
-                                    <div class="task_category">
-                                        <span class="task_cat" @click="onCatClick(i)">{{task.task_category}}</span>
-                                        <ul class="cat_list list-unstyled" :class="task.task_cat_list ? 'visible' : ''">
-                                            <li class="task_cat mb-1" v-for="(category, i) in taskCategories" @click="changeCategory(i, task.task_id)">{{category}}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <button class="btn btn-outline-secondary" @click="deleteTask(task.task_id)"><i class="fa-solid fa-trash"></i></button>
-                            </li>
-                        </ul>
+
+                    <div class="row row-cols-1 row-cols-md-2">
+                        <!-- task non importanti -->
+                        <div class="col">
+                            <h2>Lista task:</h2>
+                            <div class="task_container mb-3 py-3" @drop="onDrop($event, false)" @dragover.prevent @dragenter.prevent>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(task, i) in taskImportance.zero" @dblclick="changeTaskStatus(task.task_id)" draggable="true" @dragstart="startDrag($event, task)">
+                                        <div class="task_text d-flex gap-3 align-items-center">
+                                            <span :class="task.task_status ? 'text-decoration-line-through' : ''">{{task.task_name}}</span>
+                                            <div class="task_category">
+                                                <span class="task_cat" @click="onCatClick(i)">{{task.task_category}}</span>
+                                                <ul class="cat_list list-unstyled" :class="task.task_cat_list ? 'visible' : ''">
+                                                    <li class="task_cat mb-1" v-for="(category, i) in taskCategories" @click="changeCategory(i, task.task_id)">{{category}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-secondary" @click="deleteTask(task.task_id)"><i class="fa-solid fa-trash"></i></button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- task importanti -->
+                        <div class="col">
+                            <h2>Priorità:</h2>
+                            <div class="task_container mb-3 py-3" @drop="onDrop($event, true)" @dragover.prevent @dragenter.prevent>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(task, i) in taskImportance.one" @dblclick="changeTaskStatus(task.task_id)" draggable="true" @dragstart="startDrag($event, task)">
+                                        <div class="task_text d-flex gap-3 align-items-center">
+                                            <span :class="task.task_status ? 'text-decoration-line-through' : ''">{{task.task_name}}</span>
+                                            <div class="task_category">
+                                                <span class="task_cat" @click="onCatClick(i)">{{task.task_category}}</span>
+                                                <ul class="cat_list list-unstyled" :class="task.task_cat_list ? 'visible' : ''">
+                                                    <li class="task_cat mb-1" v-for="(category, i) in taskCategories" @click="changeCategory(i, task.task_id)">{{category}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-secondary" @click="deleteTask(task.task_id)"><i class="fa-solid fa-trash"></i></button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+
                     <form @submit.prevent="taskSubmit">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" placeholder="Inserisci nuova task" v-model="taskData.new_task">
