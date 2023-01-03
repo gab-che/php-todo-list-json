@@ -1,5 +1,6 @@
 <?php
-$tasks = json_decode(file_get_contents('../tasks.json'), true);
+require_once 'functions.php';
+$tasks = readData();
 
 $task_categories = [];
 

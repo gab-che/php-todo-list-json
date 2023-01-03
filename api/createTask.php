@@ -1,7 +1,9 @@
 <?php
+require_once 'functions.php';
+
 array_key_exists('new_task', $_POST) ? $_POST['new_task'] : $_POST['new_task'] = '';
 
-$tasks = json_decode(file_get_contents("../tasks.json"), true);
+$tasks = readData();
 
 $new_task = [
     'task_name' => $_POST['new_task'],
@@ -9,12 +11,12 @@ $new_task = [
     'task_status' => false,
     'task_id' => uniqid(),
     'task_cat_list' => false,
-    'task_important' => false,
+    'task_important' => (bool)json_decode($_POST['priority']),
 ];
 
 $tasks[] = $new_task;
 
-file_put_contents("../tasks.json", json_encode($tasks, JSON_PRETTY_PRINT));
+$writeData($tasks);
 
 header("Content-Type: application/json");
 

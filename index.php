@@ -34,7 +34,7 @@ $tasks = json_decode(file_get_contents("tasks.json"), true);
                                         <div class="task_text d-flex gap-3 align-items-center">
                                             <span :class="task.task_status ? 'text-decoration-line-through' : ''">{{task.task_name}}</span>
                                             <div class="task_category">
-                                                <span class="task_cat" @click="onCatClick(i)">{{task.task_category}}</span>
+                                                <span class="task_cat" @click="onCatClick(task.task_id)">{{task.task_category}}</span>
                                                 <ul class="cat_list list-unstyled" :class="task.task_cat_list ? 'visible' : ''">
                                                     <li class="task_cat mb-1" v-for="(category, i) in taskCategories" @click="changeCategory(i, task.task_id)">{{category}}</li>
                                                 </ul>
@@ -55,7 +55,7 @@ $tasks = json_decode(file_get_contents("tasks.json"), true);
                                         <div class="task_text d-flex gap-3 align-items-center">
                                             <span :class="task.task_status ? 'text-decoration-line-through' : ''">{{task.task_name}}</span>
                                             <div class="task_category">
-                                                <span class="task_cat" @click="onCatClick(i)">{{task.task_category}}</span>
+                                                <span class="task_cat" @click="onCatClick(task.task_id)">{{task.task_category}}</span>
                                                 <ul class="cat_list list-unstyled" :class="task.task_cat_list ? 'visible' : ''">
                                                     <li class="task_cat mb-1" v-for="(category, i) in taskCategories" @click="changeCategory(i, task.task_id)">{{category}}</li>
                                                 </ul>
@@ -70,7 +70,11 @@ $tasks = json_decode(file_get_contents("tasks.json"), true);
 
                     <form @submit.prevent="taskSubmit">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Inserisci nuova task" v-model="taskData.new_task">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0" type="checkbox" value="false" v-model="taskData.priority">
+                                <i class="fa-solid fa-exclamation ms-2"></i>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Inserisci nuova task" v-model="taskData.new_task" ref="input">
                             <input list="categories" type="text" class="form-control" placeholder="Inserisci categoria" v-model="taskData.new_category">
                             <datalist id="categories">
                                 <option :value="category" v-for="category in taskCategories">{{category}}</option>

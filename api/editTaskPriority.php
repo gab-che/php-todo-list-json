@@ -1,9 +1,11 @@
 <?php
+require_once 'functions.php';
+
 if (empty($_POST['itemId'])) {
     exit('Id mancante');
 }
 
-$tasks = json_decode(file_get_contents("../tasks.json"), true);
+$tasks = readData();
 
 $index;
 
@@ -15,7 +17,7 @@ foreach ($tasks as $i => $task) {
 
 $tasks[$index]['task_important'] = !$tasks[$index]['task_important'];
 
-file_put_contents("../tasks.json", json_encode($tasks, JSON_PRETTY_PRINT));
+$writeData($tasks);
 
 header("Content-Type: application/json");
 

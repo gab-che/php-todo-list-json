@@ -7,7 +7,8 @@ createApp({
             taskCategories: [],
             taskData: {
                 new_task: '',
-                new_category: ''
+                new_category: '',
+                priority: false,
             },
         }
     },
@@ -27,7 +28,7 @@ createApp({
                 })
         },
 
-        taskSubmit() {
+        createTask() {
             axios.post('api/createTask.php', this.taskData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             })
@@ -35,9 +36,19 @@ createApp({
                     this.fetchTasks();
                     this.fetchCategories();
                 })
+        },
+
+        taskSubmit() {
+            if (!this.taskData.new_task || !this.taskData.new_category) {
+                alert("Inserisci del testo!")
+            } else {
+                this.createTask();
+            }
 
             this.taskData.new_task = '';
             this.taskData.new_category = '';
+            this.taskData.priority = false;
+            this.$refs.input.focus();
         },
 
         changeTaskStatus(id) {
@@ -60,7 +71,11 @@ createApp({
         },
 
         onCatClick(id) {
-            this.taskList[id].task_cat_list = !this.taskList[id].task_cat_list;
+            this.taskList.forEach((task) => {
+                if (task.task_id === id) {
+                    task.task_cat_list = !task.task_cat_list;
+                }
+            })
         },
 
         changeCategory(i, id) {
@@ -109,5 +124,6 @@ createApp({
     mounted() {
         this.fetchTasks();
         this.fetchCategories();
+        this.$refs.input.focus();
     }
 }).mount("#app");
